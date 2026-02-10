@@ -7,6 +7,8 @@ import { resolve } from 'node:path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TripModule } from './modules/trip/trip.module';
+import { MaintenanceModule } from './modules/maintenance/maintenance.module';
+import { SharedAuthenticationModule } from './common';
 
 @Module({
   imports: [
@@ -21,8 +23,10 @@ import { TripModule } from './modules/trip/trip.module';
 
     MongooseModule.forRoot(process.env.DB_URI as string),
     AuthenticationModule,
+    SharedAuthenticationModule,
     UserModule,
-    TripModule
+    TripModule,
+    MaintenanceModule
   ],
   controllers: [AppController],
   providers: [AppService],

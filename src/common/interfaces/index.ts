@@ -3,4 +3,5 @@ export * from './token.interface';
 export * from './otp.interface';
 export * from './response.interface';
 export * from './trip.interface';
+export * from './maintenance.interface';
 
