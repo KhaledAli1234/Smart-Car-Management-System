@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { resolve } from 'node:path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { TripModule } from './modules/trip/trip.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { AppService } from './app.service';
     MongooseModule.forRoot(process.env.DB_URI as string),
     AuthenticationModule,
     UserModule,
+    TripModule
   ],
   controllers: [AppController],
   providers: [AppService],

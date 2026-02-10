@@ -1,34 +1,62 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Patch,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { TripService } from './trip.service';
-import { CreateTripDto } from './dto/create-trip.dto';
-import { UpdateTripDto } from './dto/update-trip.dto';
+import { CreateTripDTO, UpdateTripDTO } from './dto/trip.dto';
+import { IResponse, successResponse } from 'src/common';
 
-@Controller('trip')
+@UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+@Controller('trips')
 export class TripController {
   constructor(private readonly tripService: TripService) {}
 
   @Post()
-  create(@Body() createTripDto: CreateTripDto) {
-    return this.tripService.create(createTripDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.tripService.findAll();
+  async createTrip(@Body() body: CreateTripDTO): Promise<IResponse> {
+    await this.tripService.createTrip(body);
+    return successResponse();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.tripService.findOne(+id);
+  async getTrip(@Param('id') id: string): Promise<IResponse> {
+    const trip = await this.tripService.getTrip(id);
+    return successResponse({ data: { trip } });
+  }
+
+  @Get('user/:userId')
+  async getUserTrips(
+    @Param('userId') userId: string,
+  ): Promise<IResponse> {
+    const trips = await this.tripService.getUserTrips(userId);
+    return successResponse({ data: { trips } });
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTripDto: UpdateTripDto) {
-    return this.tripService.update(+id, updateTripDto);
+  async updateTrip(
+    @Param('id') id: string,
+    @Body() body: UpdateTripDTO,
+  ): Promise<IResponse> {
+    await this.tripService.updateTrip(id, body);
+    return successResponse();
+  }
+
+  @Patch(':id/confirm')
+  async confirmTrip(@Param('id') id: string): Promise<IResponse> {
+    await this.tripService.confirmTrip(id);
+    return successResponse();
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.tripService.remove(+id);
+  async deleteTrip(@Param('id') id: string): Promise<IResponse> {
+    await this.tripService.deleteTrip(id);
+    return successResponse();
   }
 }
