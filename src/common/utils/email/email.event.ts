@@ -19,9 +19,9 @@ emailEvent.on(OtpEnum.ConfirmEmail, async (data: IEmail) => {
     });
 
     await sendEmail(data);
-  } catch (error) {
-    console.error(`fail to send email`);
-  }
+  }catch (error) {
+  console.error(`fail to send email`, error);
+}
 });
 
 emailEvent.on(OtpEnum.ResetPassword, async (data: IEmail) => {

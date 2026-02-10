@@ -25,7 +25,7 @@ export class Maintenance implements IMaintenance {
 }
 
 export type MaintenanceDocument = HydratedDocument<Maintenance>;
-
+const maintenanceSchema = SchemaFactory.createForClass(Maintenance);
 export const MaintenanceModel = MongooseModule.forFeature([
-  { name: Maintenance.name, schema: SchemaFactory.createForClass(Maintenance) },
+  { name: Maintenance.name, schema: maintenanceSchema },
 ]);

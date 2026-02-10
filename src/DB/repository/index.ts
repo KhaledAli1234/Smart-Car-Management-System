@@ -3,4 +3,5 @@ export * from './otp.repository';
 export * from './token.repository';
 export * from './trip.repository';
 export * from './maintenance.repository';
+export * from './fuel.repository';
 

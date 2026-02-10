@@ -8,7 +8,6 @@ export class UserService {
   async profile(user: UserDocument): Promise<UserDocument> {
     const profile = (await this.userRepository.findOne({
       filter: { _id: user._id },
-      options: { populate: [{ path: 'wishlist' }] },
     })) as UserDocument;
     return profile;
   }

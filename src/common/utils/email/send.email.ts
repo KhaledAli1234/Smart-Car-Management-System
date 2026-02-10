@@ -17,6 +17,6 @@ export const sendEmail = async (data: Mail.Options): Promise<void> => {
 
   await transporter.sendMail({
     ...data,
-    from: `"Route ❤️✅" <${process.env.EMAIL as string}>`,
+    from: `"Mr/Khaled A.❤️✅" <${process.env.EMAIL as string}>`,
   });
 };

@@ -117,15 +117,6 @@ export class User implements IUser {
   @Virtual()
   otp: OtpDocument[];
 
-  @Prop({
-    type: [
-      {
-        type: Types.ObjectId,
-        ref: 'product',
-      },
-    ],
-  })
-  wishlist?: Types.ObjectId[];
 }
 
 export const userSchema = SchemaFactory.createForClass(User);

@@ -59,7 +59,12 @@ export class TripService {
       throw new NotFoundException('trip not found');
     }
 
-    Object.assign(trip, data);
+    for (const key of Object.keys(data)) {
+      if (data[key] !== undefined) {
+        trip[key] = data[key];
+      }
+    }
+
     await trip.save();
 
     return 'Done';

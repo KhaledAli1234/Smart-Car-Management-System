@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import {
   createNumericalOtp,
+  emailEvent,
   LoginCredentialsResponse,
   OtpEnum,
   providerEnum,
@@ -34,12 +35,17 @@ export class AuthenticationService {
     private readonly secuirtyService: SecuirtyService,
     private readonly tokenService: TokenService,
   ) {}
+  
+  private async createConfirmEmailOtp(
+    userId: Types.ObjectId,
+    userEmail: string,
+  ) {
+    const otp = createNumericalOtp();
 
-  private async createConfirmEmailOtp(userId: Types.ObjectId) {
     await this.otpRepository.create({
       data: [
         {
-          otp: createNumericalOtp(),
+          otp,
           expiredAt: new Date(Date.now() + 2 * 60 * 1000),
           createdBy: userId,
           type: OtpEnum.ConfirmEmail,
@@ -72,23 +78,23 @@ export class AuthenticationService {
     return payload;
   }
 
-
   async signup(data: SignupBodyDTO): Promise<string> {
     const { email, username, password } = data;
+
     const checkUserExist = await this.userRepository.findOne({
       filter: { email },
     });
     if (checkUserExist) {
       throw new ConflictException('Email Exist');
     }
+
     const [user] = await this.userRepository.create({
       data: [{ username, email, password }],
     });
-    if (!user) {
-      throw new BadRequestException('fail to signup');
-    }
+    if (!user) throw new BadRequestException('fail to signup');
 
-    await this.createConfirmEmailOtp(user._id);
+    await this.createConfirmEmailOtp(user._id, user.email);
+
     return 'Done';
   }
   async resendConfirmEmail(data: ResendConfirmEmailDTO): Promise<string> {
@@ -108,7 +114,7 @@ export class AuthenticationService {
       );
     }
 
-    await this.createConfirmEmailOtp(user._id);
+    await this.createConfirmEmailOtp(user._id, user.email);;
 
     return 'Done';
   }
