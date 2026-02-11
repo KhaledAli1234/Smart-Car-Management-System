@@ -16,12 +16,17 @@ export class FuelService {
   ) {}
 
   async createFuel(data: CreateFuelDTO): Promise<string> {
+    if (data.amount == null || data.distance == null) {
+      throw new BadRequestException('amount and distance are required');
+    }
+
     const fuel = await this.fuelRepository.create({
       data: [{ ...data, user: new Types.ObjectId(data.user) }],
     });
 
     if (!fuel.length)
       throw new BadRequestException('fail to create fuel record');
+
     return 'Done';
   }
 
@@ -42,14 +47,25 @@ export class FuelService {
   }
 
   async updateFuel(id: string, data: UpdateFuelDTO): Promise<string> {
-    const fuel = await this.fuelRepository.findOne({
+    Object.keys(data).forEach(
+      (key) => data[key] === undefined && delete data[key],
+    );
+
+    if ('amount' in data && data.amount == null) {
+      throw new BadRequestException('amount cannot be null');
+    }
+    if ('distance' in data && data.distance == null) {
+      throw new BadRequestException('distance cannot be null');
+    }
+
+    const fuel = await this.fuelRepository.findOneAndUpdate({
       filter: { _id: new Types.ObjectId(id) },
+      update: { $set: data },
     });
 
-    if (!fuel) throw new NotFoundException('fuel record not found');
-
-    Object.assign(fuel, data);
-    await fuel.save();
+    if (!fuel) {
+      throw new NotFoundException('fuel record not found');
+    }
 
     return 'Done';
   }
@@ -65,6 +81,7 @@ export class FuelService {
   }
 
   async calculateConsumption(userId: string) {
+
     const fuels: IFuel[] = await this.fuelRepository.find({
       filter: { user: new Types.ObjectId(userId) },
       options: { sort: { createdAt: 1 } },
@@ -72,18 +89,17 @@ export class FuelService {
 
     if (!fuels.length) return { totalKm: 0, totalLiters: 0, consumption: 0 };
 
-    const totalKm = fuels.reduce(
-      (sum: number, f: IFuel) => sum + (f.distance || 0),
-      0,
+    const validFuels = fuels.filter(
+      (f) => f.distance != null && f.amount != null,
     );
 
-    const totalLiters = fuels.reduce(
-      (sum: number, f: IFuel) => sum + (f.amount || 0),
-      0,
-    );
+    if (!validFuels.length)
+      return { totalKm: 0, totalLiters: 0, consumption: 0 };
 
+    const totalKm = validFuels.reduce((sum, f) => sum + f.distance!, 0);
+
+    const totalLiters = validFuels.reduce((sum, f) => sum + f.amount!, 0);
     const consumption = totalKm > 0 ? (totalLiters / totalKm) * 100 : 0;
-
     return { totalKm, totalLiters, consumption: +consumption.toFixed(2) };
   }
 }

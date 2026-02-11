@@ -21,8 +21,8 @@ import { Auth, IResponse, RoleEnum, successResponse } from 'src/common';
 export class MaintenanceController {
   constructor(private readonly maintenanceService: MaintenanceService) {}
 
-  @Post()
   @Auth([RoleEnum.user])
+  @Post()
   async createMaintenance(
     @Body() body: CreateMaintenanceDTO,
   ): Promise<IResponse> {
@@ -30,15 +30,15 @@ export class MaintenanceController {
     return successResponse();
   }
 
-  @Get(':id')
   @Auth([RoleEnum.user, RoleEnum.admin])
+  @Get(':id')
   async getMaintenance(@Param('id') id: string): Promise<IResponse> {
     const maintenance = await this.maintenanceService.getMaintenance(id);
     return successResponse({ data: { maintenance } });
   }
 
-  @Get('user/:userId')
   @Auth([RoleEnum.user, RoleEnum.admin])
+  @Get('user/:userId')
   async getUserMaintenance(
     @Param('userId') userId: string,
   ): Promise<IResponse> {
@@ -50,8 +50,8 @@ export class MaintenanceController {
     });
   }
 
-  @Get('upcoming/:userId')
   @Auth([RoleEnum.user, RoleEnum.admin])
+  @Get('upcoming/:userId')
   async getUpcomingMaintenance(
     @Param('userId') userId: string,
   ): Promise<IResponse> {
@@ -61,8 +61,8 @@ export class MaintenanceController {
     return successResponse({ data: { upcoming } });
   }
 
-  @Patch(':id')
   @Auth([RoleEnum.user, RoleEnum.admin])
+  @Patch(':id')
   async updateMaintenance(
     @Param('id') id: string,
     @Body() body: UpdateMaintenanceDTO,
@@ -71,8 +71,8 @@ export class MaintenanceController {
     return successResponse();
   }
 
-  @Delete(':id')
   @Auth([RoleEnum.admin])
+  @Delete(':id')
   async deleteMaintenance(@Param('id') id: string): Promise<IResponse> {
     await this.maintenanceService.deleteMaintenance(id);
     return successResponse();

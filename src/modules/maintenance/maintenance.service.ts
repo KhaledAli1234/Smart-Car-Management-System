@@ -12,13 +12,9 @@ import {
 
 @Injectable()
 export class MaintenanceService {
-  constructor(
-    private readonly maintenanceRepository: MaintenanceRepository,
-  ) {}
+  constructor(private readonly maintenanceRepository: MaintenanceRepository) {}
 
-  async createMaintenance(
-    data: CreateMaintenanceDTO,
-  ): Promise<string> {
+  async createMaintenance(data: CreateMaintenanceDTO): Promise<string> {
     const record = await this.maintenanceRepository.create({
       data: [
         {
@@ -68,16 +64,19 @@ export class MaintenanceService {
     id: string,
     data: UpdateMaintenanceDTO,
   ): Promise<string> {
-    const record = await this.maintenanceRepository.findOne({
+    
+    Object.keys(data).forEach(
+      (key) => data[key] === undefined && delete data[key],
+    );
+
+    const record = await this.maintenanceRepository.findOneAndUpdate({
       filter: { _id: new Types.ObjectId(id) },
+      update: { $set: data },
     });
 
     if (!record) {
       throw new NotFoundException('maintenance not found');
     }
-
-    Object.assign(record, data);
-    await record.save();
 
     return 'Done';
   }

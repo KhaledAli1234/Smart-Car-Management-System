@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import {
   IsEnum,
   IsMongoId,
@@ -6,7 +7,6 @@ import {
   IsDate,
 } from 'class-validator';
 import { MaintenanceTypeEnum } from 'src/common';
-
 
 export class CreateMaintenanceDTO {
   @IsMongoId()
@@ -22,12 +22,13 @@ export class CreateMaintenanceDTO {
   @IsNumber()
   mileage?: number;
 
+  @Type(() => Date)
   @IsDate()
   performedAt: Date;
 
-  @IsOptional()
+  @Type(() => Date)
   @IsDate()
-  nextMaintenanceAt?: Date;
+  nextMaintenanceAt: Date;
 }
 
 export class UpdateMaintenanceDTO {

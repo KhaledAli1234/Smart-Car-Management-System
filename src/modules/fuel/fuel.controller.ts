@@ -18,29 +18,29 @@ import { Auth, IResponse, RoleEnum, successResponse } from 'src/common';
 export class FuelController {
   constructor(private readonly fuelService: FuelService) {}
 
-  @Post()
   @Auth([RoleEnum.user])
+  @Post()
   async createFuel(@Body() body: CreateFuelDTO): Promise<IResponse> {
     await this.fuelService.createFuel(body);
     return successResponse();
   }
 
-  @Get(':id')
   @Auth([RoleEnum.user, RoleEnum.admin])
+  @Get(':id')
   async getFuel(@Param('id') id: string): Promise<IResponse> {
     const fuel = await this.fuelService.getFuel(id);
     return successResponse({ data: { fuel } });
   }
 
-  @Get('user/:userId')
   @Auth([RoleEnum.user, RoleEnum.admin])
+  @Get('user/:userId')
   async getUserFuel(@Param('userId') userId: string): Promise<IResponse> {
     const fuelRecords = await this.fuelService.getUserFuel(userId);
     return successResponse({ data: { fuelRecords } });
   }
 
-  @Patch(':id')
   @Auth([RoleEnum.user, RoleEnum.admin])
+  @Patch(':id')
   async updateFuel(
     @Param('id') id: string,
     @Body() body: UpdateFuelDTO,
@@ -49,15 +49,15 @@ export class FuelController {
     return successResponse();
   }
 
-  @Delete(':id')
   @Auth([RoleEnum.admin])
+  @Delete(':id')
   async deleteFuel(@Param('id') id: string): Promise<IResponse> {
     await this.fuelService.deleteFuel(id);
     return successResponse();
   }
 
-  @Get('consumption/:userId')
   @Auth([RoleEnum.user, RoleEnum.admin])
+  @Get('consumption/:userId')
   async getFuelConsumption(
     @Param('userId') userId: string,
   ): Promise<IResponse> {

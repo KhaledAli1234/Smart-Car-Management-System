@@ -13,14 +13,20 @@ export class Fuel implements IFuel {
   @Prop({ type: Number, required: true })
   cost: number;
 
-  @Prop({ type: Number })
-  distance?: number;
+  @Prop({ type: Number, required: true })
+  distance: number;
 
   @Prop({ type: String })
   station?: string;
 
   @Prop({ type: Date, default: Date.now })
   date?: Date;
+
+  @Prop({ type: Number })
+  odometer?: number;
+
+  @Prop({ type: Date })
+  filledAt?: Date;
 }
 
 export type FuelDocument = HydratedDocument<Fuel>;
