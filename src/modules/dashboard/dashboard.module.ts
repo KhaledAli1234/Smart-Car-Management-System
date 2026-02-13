@@ -10,10 +10,11 @@ import {
   TripRepository,
 } from 'src/DB';
 import { redisProvider } from 'src/common';
+import { AIAdvisorController } from './ai-advisor.controller';
 
 @Module({
   imports: [TripModel, MaintenanceModel, FuelModel],
-  controllers: [DashboardController],
+  controllers: [DashboardController , AIAdvisorController],
   providers: [
     DashboardService,
     TripRepository,
