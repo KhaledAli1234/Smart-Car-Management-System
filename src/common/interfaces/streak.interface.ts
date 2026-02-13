@@ -1,10 +1,11 @@
 import { Types } from 'mongoose';
 
 export interface IStreak {
+  _id?: Types.ObjectId; 
   user: Types.ObjectId;
-  safeDrivingDays: number;
-  maintenanceDays: number;
-  badge?: string;
+  safeDrivingStreak: number; 
+  maintenanceStreak: number;
+  badges: number; 
   createdAt?: Date;
   updatedAt?: Date;
 }

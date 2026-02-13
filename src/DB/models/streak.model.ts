@@ -2,25 +2,22 @@ import { MongooseModule, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import { IStreak } from 'src/common';
 
-
 @Schema({ timestamps: true })
 export class Streak implements IStreak {
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   user: Types.ObjectId;
 
   @Prop({ type: Number, default: 0 })
-  safeDrivingDays: number;
+  safeDrivingStreak: number;
 
   @Prop({ type: Number, default: 0 })
-  maintenanceDays: number;
+  maintenanceStreak: number;
 
-  @Prop({ type: String })
-  badge?: string;
+  @Prop({ type: Number, default: 0 })
+  badges: number;
 }
 
 export type StreakDocument = HydratedDocument<Streak>;
-
-const streakSchema = SchemaFactory.createForClass(Streak);
 export const StreakModel = MongooseModule.forFeature([
-  { name: Streak.name, schema: streakSchema },
+  { name: Streak.name, schema: SchemaFactory.createForClass(Streak) },
 ]);

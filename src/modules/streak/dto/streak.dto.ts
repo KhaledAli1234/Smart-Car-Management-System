@@ -1,30 +1,39 @@
-import { IsMongoId, IsNumber, IsOptional, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsMongoId, IsNumber, IsOptional } from 'class-validator';
 
 export class CreateStreakDTO {
   @IsMongoId()
   user: string;
 
+  @IsOptional()
+  @Type(() => Number)
   @IsNumber()
-  safeDrivingDays: number;
-
-  @IsNumber()
-  maintenanceDays: number;
+  safeDrivingStreak?: number;
 
   @IsOptional()
-  @IsString()
-  badge?: string;
+  @Type(() => Number)
+  @IsNumber()
+  maintenanceStreak?: number;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  badges?: number;
 }
 
 export class UpdateStreakDTO {
   @IsOptional()
+  @Type(() => Number)
   @IsNumber()
-  safeDrivingDays?: number;
+  safeDrivingStreak?: number;
 
   @IsOptional()
+  @Type(() => Number)
   @IsNumber()
-  maintenanceDays?: number;
+  maintenanceStreak?: number;
 
   @IsOptional()
-  @IsString()
-  badge?: string;
+  @Type(() => Number)
+  @IsNumber()
+  badges?: number;
 }

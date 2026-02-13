@@ -1,14 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-  UsePipes,
-  ValidationPipe,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { StreakService } from './streak.service';
 import { CreateStreakDTO, UpdateStreakDTO } from './dto/streak.dto';
 import { Auth, IResponse, RoleEnum, successResponse } from 'src/common';
@@ -34,10 +24,7 @@ export class StreakController {
 
   @Auth([RoleEnum.user])
   @Patch(':id')
-  async updateStreak(
-    @Param('id') id: string,
-    @Body() body: UpdateStreakDTO,
-  ): Promise<IResponse> {
+  async updateStreak(@Param('id') id: string, @Body() body: UpdateStreakDTO): Promise<IResponse> {
     await this.streakService.updateStreak(id, body);
     return successResponse();
   }
@@ -47,5 +34,19 @@ export class StreakController {
   async deleteStreak(@Param('id') id: string): Promise<IResponse> {
     await this.streakService.deleteStreak(id);
     return successResponse();
+  }
+
+  @Auth([RoleEnum.user])
+  @Patch('increment/safe/:userId')
+  async incrementSafeDriving(@Param('userId') userId: string): Promise<IResponse> {
+    await this.streakService.incrementSafeDriving(userId);
+    return successResponse({ message: 'Safe driving incremented' });
+  }
+
+  @Auth([RoleEnum.user])
+  @Patch('increment/maintenance/:userId')
+  async incrementMaintenance(@Param('userId') userId: string): Promise<IResponse> {
+    await this.streakService.incrementMaintenance(userId);
+    return successResponse({ message: 'Maintenance incremented' });
   }
 }
