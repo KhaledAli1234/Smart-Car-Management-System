@@ -1,4 +1,4 @@
-import { RiskLevelEnum } from "../enums";
+import { RiskLevelEnum } from '../enums';
 
 export interface IDashboard {
   totalTrips: number;
@@ -7,7 +7,7 @@ export interface IDashboard {
   fuel: {
     totalCost: number;
     totalLiters: number;
-    consumption: number; 
+    consumption: number;
   };
 
   maintenance: {
@@ -16,6 +16,7 @@ export interface IDashboard {
     riskLevel: RiskLevelEnum;
   };
 
-  healthScore: number; 
+  healthScore: number;
   monthlyCost: number;
+  monthlyCostByMonth?: Record<string, number>;
 }

@@ -9,6 +9,7 @@ import {
   TripModel,
   TripRepository,
 } from 'src/DB';
+import { redisProvider } from 'src/common';
 
 @Module({
   imports: [TripModel, MaintenanceModel, FuelModel],
@@ -18,6 +19,7 @@ import {
     TripRepository,
     FuelRepository,
     MaintenanceRepository,
+    // redisProvider
   ],
 })
 export class DashboardModule {}

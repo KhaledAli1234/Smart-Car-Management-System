@@ -18,11 +18,6 @@ import { DashboardModule } from './modules/dashboard/dashboard.module';
       envFilePath: resolve('./config/.env.development.local'),
       isGlobal: true,
     }),
-    // CacheModule.register({
-    //   ttl:5000,
-    //   isGlobal: true,
-    // }),
-
     MongooseModule.forRoot(process.env.DB_URI as string),
     AuthenticationModule,
     SharedAuthenticationModule,

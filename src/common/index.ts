@@ -8,3 +8,4 @@ export * from './guards';
 export * from './interceptors';
 export * from './enums';
 export * from './modules';
+export * from './providers';
