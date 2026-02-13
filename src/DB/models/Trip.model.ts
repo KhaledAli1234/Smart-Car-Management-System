@@ -8,7 +8,7 @@ import { SpeedLevelEnum } from 'src/common/enums/trip.enum';
 })
 export class Trip implements ITrip {
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
-  driver: Types.ObjectId;
+  user: Types.ObjectId;
 
   @Prop({ type: String, required: true })
   route: string;

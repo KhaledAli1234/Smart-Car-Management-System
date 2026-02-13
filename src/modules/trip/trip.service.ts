@@ -11,12 +11,12 @@ import { Types } from 'mongoose';
 export class TripService {
   constructor(private readonly tripRepository: TripRepository) {}
 
-  async createTrip(data: CreateTripDTO): Promise<string> {
+  async createTrip(data: CreateTripDTO, userId: string): Promise<string> {
     const trip = await this.tripRepository.create({
       data: [
         {
           ...data,
-          driver: new Types.ObjectId(data.driver),
+          user: new Types.ObjectId(userId),
         },
       ],
     });

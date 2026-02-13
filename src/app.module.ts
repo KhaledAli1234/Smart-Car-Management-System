@@ -10,6 +10,7 @@ import { TripModule } from './modules/trip/trip.module';
 import { MaintenanceModule } from './modules/maintenance/maintenance.module';
 import { SharedAuthenticationModule } from './common';
 import { FuelModule } from './modules/fuel/fuel.module';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -28,7 +29,8 @@ import { FuelModule } from './modules/fuel/fuel.module';
     UserModule,
     TripModule,
     MaintenanceModule,
-    FuelModule
+    FuelModule,
+    DashboardModule
   ],
   controllers: [AppController],
   providers: [AppService],

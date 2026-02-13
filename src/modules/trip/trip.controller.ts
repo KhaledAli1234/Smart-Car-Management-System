@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Post,
+  Req,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -23,8 +24,12 @@ export class TripController {
 
   @Auth([RoleEnum.user])
   @Post()
-  async createTrip(@Body() body: CreateTripDTO): Promise<IResponse> {
-    await this.tripService.createTrip(body);
+  async createTrip(
+    @Body() body: CreateTripDTO,
+    @Req() req,
+  ): Promise<IResponse> {
+    const userId = req.credentials.user._id;
+    await this.tripService.createTrip(body, userId);
     return successResponse();
   }
 

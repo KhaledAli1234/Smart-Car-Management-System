@@ -4,3 +4,9 @@ export enum MaintenanceTypeEnum {
   BRAKES = 'brakes',
   TIRES = 'tires',
 }
+
+export enum RiskLevelEnum {
+  LOW = 'low',
+  MEDIUM = 'medium',
+  HIGH = 'high'
+}

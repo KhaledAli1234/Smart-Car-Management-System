@@ -5,5 +5,6 @@ export * from './response.interface';
 export * from './trip.interface';
 export * from './maintenance.interface';
 export * from './fuel.interface';
+export * from './dashboard.interface';
 
 
