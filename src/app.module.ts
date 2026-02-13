@@ -12,6 +12,7 @@ import { SharedAuthenticationModule } from './common';
 import { FuelModule } from './modules/fuel/fuel.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { AlertModule } from './modules/alert/alert.module';
+import { StreakModule } from './modules/streak/streak.module';
 
 @Module({
   imports: [
@@ -27,7 +28,8 @@ import { AlertModule } from './modules/alert/alert.module';
     MaintenanceModule,
     FuelModule,
     DashboardModule,
-    AlertModule
+    AlertModule,
+    StreakModule
   ],
   controllers: [AppController],
   providers: [AppService],

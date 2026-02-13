@@ -7,5 +7,6 @@ export * from './maintenance.interface';
 export * from './fuel.interface';
 export * from './dashboard.interface';
 export * from './alert.interface';
+export * from './streak.interface';
 
 
