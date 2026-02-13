@@ -15,8 +15,18 @@ export class DashboardController {
 
   @Get(':userId')
   @Auth([RoleEnum.user, RoleEnum.admin])
-  async getDashboard(@Param('userId') userId: string): Promise<IResponse> {
+  async getDashboard(
+    @Param('userId') userId: string,
+  ): Promise<IResponse> {
     const dashboard = await this.dashboardService.getDashboard(userId);
-    return successResponse({ data: { dashboard } });
+
+    return successResponse({
+      data: {
+        dashboard: {
+          ...dashboard,
+          monthlyCostByMonth: dashboard.monthlyCostByMonth,
+        },
+      },
+    });
   }
 }
