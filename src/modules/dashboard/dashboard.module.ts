@@ -22,5 +22,6 @@ import { AIAdvisorController } from './ai-advisor.controller';
     MaintenanceRepository,
     // redisProvider
   ],
+  exports: [DashboardService],
 })
 export class DashboardModule {}

@@ -11,6 +11,7 @@ import { MaintenanceModule } from './modules/maintenance/maintenance.module';
 import { SharedAuthenticationModule } from './common';
 import { FuelModule } from './modules/fuel/fuel.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
+import { AlertModule } from './modules/alert/alert.module';
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import { DashboardModule } from './modules/dashboard/dashboard.module';
     TripModule,
     MaintenanceModule,
     FuelModule,
-    DashboardModule
+    DashboardModule,
+    AlertModule
   ],
   controllers: [AppController],
   providers: [AppService],
