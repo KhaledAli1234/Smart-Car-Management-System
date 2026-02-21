@@ -3,6 +3,7 @@ export enum AlertTypeEnum {
   FUEL = 'FUEL',
   HEALTH = 'HEALTH',
   BEHAVIOR = 'BEHAVIOR',
+  STREAK = 'STREAK',
 }
 
 export enum AlertSeverityEnum {

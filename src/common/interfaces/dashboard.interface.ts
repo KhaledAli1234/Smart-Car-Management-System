@@ -15,6 +15,11 @@ export interface IDashboard {
     upcomingCount: number;
     riskLevel: RiskLevelEnum;
   };
+  streak?: {
+    safeDriving: number;
+    maintenance: number;
+    badges: number;
+  };
 
   healthScore: number;
   monthlyCost: number;

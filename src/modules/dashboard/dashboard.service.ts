@@ -1,7 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { Types } from 'mongoose';
 import { Redis } from 'ioredis';
-import { FuelRepository, MaintenanceRepository, TripRepository } from 'src/DB';
+import {
+  FuelRepository,
+  MaintenanceRepository,
+  StreakRepository,
+  TripRepository,
+} from 'src/DB';
 import {
   IDashboard,
   RiskLevelEnum,
@@ -16,6 +21,7 @@ export class DashboardService {
     private readonly tripRepository: TripRepository,
     private readonly fuelRepository: FuelRepository,
     private readonly maintenanceRepository: MaintenanceRepository,
+    private readonly streakRepository: StreakRepository,
     // private readonly redisClient: Redis,
   ) {}
 
@@ -41,6 +47,9 @@ export class DashboardService {
     const maintenances = (await this.maintenanceRepository.find({
       filter: { user },
     })) as IMaintenance[];
+    const streak = await this.streakRepository.findOne({
+      filter: { user },
+    });
 
     const totalTrips = trips.length;
     const totalDistance = trips.reduce<number>(
@@ -98,6 +107,11 @@ export class DashboardService {
         totalRecords: maintenances.length,
         upcomingCount: upcoming.length,
         riskLevel,
+      },
+      streak: {
+        safeDriving: streak?.safeDrivingStreak ?? 0,
+        maintenance: streak?.maintenanceStreak ?? 0,
+        badges: streak?.badges ?? 0,
       },
       healthScore,
       monthlyCost,

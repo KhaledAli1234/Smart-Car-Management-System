@@ -6,6 +6,8 @@ import {
   FuelRepository,
   MaintenanceModel,
   MaintenanceRepository,
+  StreakModel,
+  StreakRepository,
   TripModel,
   TripRepository,
 } from 'src/DB';
@@ -13,13 +15,14 @@ import { redisProvider } from 'src/common';
 import { AIAdvisorController } from './ai-advisor.controller';
 
 @Module({
-  imports: [TripModel, MaintenanceModel, FuelModel],
+  imports: [TripModel, MaintenanceModel, FuelModel , StreakModel],
   controllers: [DashboardController , AIAdvisorController],
   providers: [
     DashboardService,
     TripRepository,
     FuelRepository,
     MaintenanceRepository,
+    StreakRepository
     // redisProvider
   ],
   exports: [DashboardService],

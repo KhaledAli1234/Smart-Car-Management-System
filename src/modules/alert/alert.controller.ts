@@ -1,6 +1,6 @@
 import { Controller, Get, Param, UsePipes, ValidationPipe } from '@nestjs/common';
-import { AlertService, IAlert } from './alert.service';
-import { Auth, IResponse, RoleEnum, successResponse } from 'src/common';
+import { AlertService } from './alert.service';
+import { Auth, IAlert, IResponse, RoleEnum, successResponse } from 'src/common';
 
 @UsePipes(new ValidationPipe({ whitelist: true }))
 @Controller('alerts')
